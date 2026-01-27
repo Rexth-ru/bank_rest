@@ -1,8 +1,38 @@
-#
-# application.yml — главный конфигурационный файл Spring Boot.
+spring:
+  jpa:
+    database: postgresql
+    open-in-view: false
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 
-Что нужно сделать:
-  - Указать настройки подключения к базе данных.
-  - Указать порт приложения.
-  - Настроить параметры безопасности и JWT.
-  - Включить Swagger UI.
+  datasource:
+    hikari:
+      minimum-idle: 2
+      maximum-pool-size: 5
+      max-lifetime: 600000
+      connection-timeout: 30000
+    url: jdbc:postgresql://localhost:54324/postgres
+    password: password
+    username: user
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    change-log: classpath:/db/migration/changelog/db.changelog-master.yaml
+    contexts: development
+    enabled: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+
+server:
+  port: 8081
+
+#  - Настроить параметры безопасности и JWT.
+#  - Включить Swagger UI.
